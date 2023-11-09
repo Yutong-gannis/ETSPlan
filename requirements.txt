@@ -1,0 +1,7 @@
+onnx
+onnxoptimizer
+onnxmltools
+torch
+loguru
+tensorboardX
+efficientnet_pytorch

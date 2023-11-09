@@ -5,7 +5,6 @@ import onnx
 from onnx import load_model, save_model
 import onnxoptimizer
 from onnxmltools.utils import float16_converter
-from onnxsim import simplify
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '..'))
@@ -22,7 +21,7 @@ left_rear_img = torch.zeros((batch, 3, 64, 64)).to(device)
 right_rear_img = torch.zeros((batch, 3, 64, 64)).to(device)
 nav = torch.zeros((batch, 3, 64, 64)).to(device)
 hist_feature = torch.zeros((batch, 40, 128)).to(device)
-actions = torch.zeros((batch, 20, 3)).to(device)
+actions = torch.zeros((batch, 10, 2)).to(device)
 speed_limit = torch.zeros((batch, 1)).to(device)
 stop = torch.zeros((batch, 2)).to(device)
 traffic_convention = torch.zeros((batch, 2)).to(device)
@@ -41,7 +40,8 @@ with torch.no_grad():
                                    'speed_limit', 
                                    'stop', 
                                    'traffic_convention'],
-                      output_names=['trajectory',
+                      output_names=['cls'
+                                    'trajectory',
                                     'feature'])
     print("Export ONNX successful. Model is saved at", onnx_path)
     
